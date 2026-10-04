@@ -9,7 +9,15 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { AnchorProvider } from "@coral-xyz/anchor";
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import {
+  Connection,
+  Keypair,
+  LAMPORTS_PER_SOL,
+  PublicKey,
+  SystemProgram,
+  Transaction,
+  sendAndConfirmTransaction,
+} from "@solana/web3.js";
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 import {
   FactoringClient,
@@ -25,6 +33,7 @@ const ROOT = join(here, "..", "..");
 const INVESTOR_WALLET =
   process.env.INVESTOR_WALLET ?? "GtJYcpZAAWeQ4nQB36B9wSShkXCPByRjCGRhUCTsNGTJ";
 const RPC_URL = process.env.RPC_URL ?? "http://localhost:8899";
+const IS_LOCAL = /localhost|127\.0\.0\.1/.test(RPC_URL);
 
 const loadOrCreate = (path: string) => {
   if (existsSync(path)) {
@@ -70,8 +79,18 @@ async function main() {
   await issuerClient.send(await issuerClient.initializeTx(50, issuer.publicKey, treasury));
 
   console.log("== 3. Fondos: SOL + USDC");
-  await connection.requestAirdrop(demoInvestor.publicKey, 5_000_000_000);
-  await connection.requestAirdrop(new PublicKey(INVESTOR_WALLET), 5_000_000_000);
+  // Localnet: airdrop ilimitado. Devnet: el faucet está capado, el issuer transfiere SOL propio.
+  for (const to of [demoInvestor.publicKey, new PublicKey(INVESTOR_WALLET)]) {
+    if (IS_LOCAL) await connection.requestAirdrop(to, 5 * LAMPORTS_PER_SOL);
+    else
+      await sendAndConfirmTransaction(
+        connection,
+        new Transaction().add(
+          SystemProgram.transfer({ fromPubkey: issuer.publicKey, toPubkey: to, lamports: 0.3 * LAMPORTS_PER_SOL })
+        ),
+        [issuer]
+      );
+  }
   await new Promise((r) => setTimeout(r, 1500));
   await mintUsdcTo(connection, issuer, usdcMint, demoInvestor.publicKey, 200_000);
   await mintUsdcTo(connection, issuer, usdcMint, new PublicKey(INVESTOR_WALLET), 150_000);
