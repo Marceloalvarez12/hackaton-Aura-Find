@@ -13,3 +13,7 @@ pnpm-debug.log*
 deploy-keys/
 tests/dist/
 sdk/dist/
+*.tsbuildinfo
+video/.venv/
+video/dist/
+video/out/
