@@ -15,9 +15,8 @@ SO="$ROOT/target/deploy/factoring.so"
 ADDR=$(solana-keygen pubkey "$DEPLOYER")
 BAL=$(solana balance "$ADDR" --url devnet | awk '{print $1}')
 echo "deployer $ADDR: $BAL SOL"
-if (( $(echo "$BAL < 3" | bc -l) )); then
-  echo "Faltan fondos: cargá ~3 SOL de devnet en $ADDR y reintentá."
-  exit 1
+if (( $(echo "$BAL < 2.5" | bc -l) )); then
+  echo "Aviso: $BAL SOL puede quedar corto (~2.5 SOL estimado). Si falla por fondos, el deploy retoma desde el buffer ya escrito — cargá SOL y re-corré este script."
 fi
 
 solana program deploy "$SO" \

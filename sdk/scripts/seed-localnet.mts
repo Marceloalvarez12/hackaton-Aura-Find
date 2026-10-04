@@ -80,13 +80,28 @@ async function main() {
 
   console.log("== 3. Fondos: SOL + USDC");
   // Localnet: airdrop ilimitado. Devnet: el faucet está capado, el issuer transfiere SOL propio.
-  for (const to of [demoInvestor.publicKey, new PublicKey(INVESTOR_WALLET)]) {
-    if (IS_LOCAL) await connection.requestAirdrop(to, 5 * LAMPORTS_PER_SOL);
+  // Prioridad al inversor demo (firma los fondeos on-chain); al Phantom solo si sobra.
+  const targets: Array<{ to: PublicKey; lamports: number; required: boolean }> = IS_LOCAL
+    ? [
+        { to: demoInvestor.publicKey, lamports: 5 * LAMPORTS_PER_SOL, required: true },
+        { to: new PublicKey(INVESTOR_WALLET), lamports: 5 * LAMPORTS_PER_SOL, required: true },
+      ]
+    : [
+        { to: demoInvestor.publicKey, lamports: 0.12 * LAMPORTS_PER_SOL, required: true },
+        { to: new PublicKey(INVESTOR_WALLET), lamports: 0.1 * LAMPORTS_PER_SOL, required: false },
+      ];
+  for (const { to, lamports, required } of targets) {
+    const bal = await connection.getBalance(issuer.publicKey);
+    if (!required && bal < lamports + 0.08 * LAMPORTS_PER_SOL) {
+      console.log(`   salteo transfer a ${to.toBase58()}: el issuer necesita el SOL para terminar el seed`);
+      continue;
+    }
+    if (IS_LOCAL) await connection.requestAirdrop(to, lamports);
     else
       await sendAndConfirmTransaction(
         connection,
         new Transaction().add(
-          SystemProgram.transfer({ fromPubkey: issuer.publicKey, toPubkey: to, lamports: 0.3 * LAMPORTS_PER_SOL })
+          SystemProgram.transfer({ fromPubkey: issuer.publicKey, toPubkey: to, lamports })
         ),
         [issuer]
       );
