@@ -1,0 +1,103 @@
+{
+  "voice": "es-AR-TomasNeural",
+  "rate": "+6%",
+  "pitch": [
+    {
+      "id": "p01-hook",
+      "text": "En América Latina, una pyme que le vende a una gran empresa espera entre sesenta y ciento veinte días para cobrar. Mientras tanto, tiene que pagar sueldos, proveedores e impuestos.",
+      "en": "In Latin America, an SME that sells to a large company waits 60 to 120 days to get paid. Meanwhile, it still has to cover payroll, suppliers and taxes."
+    },
+    {
+      "id": "p02-problem",
+      "text": "Para no frenar, descuenta sus facturas en el mercado informal, a costos de hasta un cuarenta por ciento anual. El capital de trabajo es el cuello de botella de millones de empresas.",
+      "en": "To keep going, it discounts its invoices on the informal market, at costs of up to 40% a year. Working capital is the bottleneck for millions of companies."
+    },
+    {
+      "id": "p03-solution",
+      "text": "Aura Fint convierte esa factura por cobrar en un activo real tokenizado en Solana. Un inversor la fondea con dólares digitales a través de un escrow en la blockchain, y la pyme recibe la liquidez en segundos, no en meses.",
+      "en": "Aura Fint turns that receivable into a tokenized real-world asset on Solana. An investor funds it with digital dollars through an on-chain escrow, and the SME gets liquidity in seconds, not months."
+    },
+    {
+      "id": "p04-how",
+      "text": "El flujo es simple. La empresa emite el token con el hash de su factura fiscal. Un verificador del protocolo la valida. El inversor fondea y recibe el token como garantía. Al vencimiento, la empresa repaga capital más rendimiento, y el inversor retira.",
+      "en": "The flow is simple. The company issues the token with the hash of its tax invoice. A protocol verifier validates it. The investor funds it and receives the token as collateral. At maturity, the company repays principal plus yield, and the investor withdraws."
+    },
+    {
+      "id": "p05-product",
+      "text": "Y ya funciona: un marketplace con facturas de proveedores de grandes empresas latinoamericanas, con calificación de riesgo, rendimiento anualizado y fondeo en un solo clic.",
+      "en": "And it already works: a marketplace of invoices from suppliers to large Latin American companies, with risk ratings, annualized yield and one-click funding."
+    },
+    {
+      "id": "p06-tech",
+      "text": "Elegimos Solana porque el factoring necesita costos de centavos y confirmación inmediata. Las cuentas del programa son la única autoridad sobre los fondos: nadie, ni siquiera nosotros, puede mover el dinero fuera de las reglas del contrato.",
+      "en": "We chose Solana because factoring needs cent-level costs and instant confirmation. The program accounts are the only authority over the funds: nobody, not even us, can move money outside the contract rules."
+    },
+    {
+      "id": "p07-trust",
+      "text": "Los datos sensibles nunca tocan la cadena, solo el hash del documento, que cualquiera puede verificar. Y el protocolo está cubierto por diecinueve tests de seguridad, uno por cada intento de abuso.",
+      "en": "Sensitive data never touches the chain, only the document hash, which anyone can verify. And the protocol is covered by 19 security tests, one for every abuse attempt."
+    },
+    {
+      "id": "p08-business",
+      "text": "El modelo de negocio es una comisión sobre cada factura fondeada. Y como el token es transferible, abrimos un mercado secundario de crédito comercial, algo imposible con el factoring tradicional.",
+      "en": "The business model is a fee on every funded invoice. And because the token is transferable, we open a secondary market for trade credit, something traditional factoring cannot do."
+    },
+    {
+      "id": "p09-roadmap",
+      "text": "Lo que sigue: verificación conectada a las agencias tributarias de la región, KYC nativo y pools fraccionados para inversores institucionales.",
+      "en": "Next: verification connected to the region's tax agencies, native KYC, and fractional pools for institutional investors."
+    },
+    {
+      "id": "p10-close",
+      "text": "Aura Fint. Liquidez inmediata para las pymes de Latinoamérica.",
+      "en": "Aura Fint. Instant liquidity for Latin America's SMEs."
+    }
+  ],
+  "demo": [
+    {
+      "id": "d01-landing",
+      "text": "Esta es Aura Fint, funcionando en vivo sobre un validador de Solana. Todo lo que van a ver son transacciones reales, firmadas en la blockchain.",
+      "en": "This is Aura Fint, running live on a Solana validator. Everything you are about to see is a real transaction, signed on the blockchain."
+    },
+    {
+      "id": "d02-marketplace",
+      "text": "Con la wallet del inversor conectada, entramos al marketplace. Cada factura muestra a la pyme emisora, al deudor corporativo, el monto, el rendimiento anualizado y su calificación de riesgo.",
+      "en": "With the investor wallet connected, we open the marketplace. Each invoice shows the issuing SME, the corporate debtor, the amount, the annualized yield and its risk rating."
+    },
+    {
+      "id": "d03-compliance",
+      "text": "Esta factura todavía no fue verificada por el oráculo del protocolo. El programa bloquea el fondeo: aunque alguien arme la transacción a mano, el contrato la rechaza.",
+      "en": "This invoice has not been verified by the protocol oracle yet. The program blocks funding: even if someone builds the transaction by hand, the contract rejects it."
+    },
+    {
+      "id": "d04-fund",
+      "text": "Ahora fondeamos la factura de AgroInsumos Pampa a Arcor: cuarenta y dos mil dólares a treinta días. Firmamos, y en menos de un segundo los fondos llegan a la pyme, y el inversor recibe el token como garantía.",
+      "en": "Now we fund the invoice from AgroInsumos Pampa to Arcor: 42,000 dollars over 30 days. We sign, and in under a second the funds reach the SME and the investor receives the token as collateral."
+    },
+    {
+      "id": "d05-timeline",
+      "text": "En el detalle vemos la historia completa de la factura, reconstruida solo con los eventos del programa: emitida, verificada y fondeada, cada paso con su firma en la cadena.",
+      "en": "In the detail view we see the full history of the invoice, rebuilt only from program events: issued, verified and funded, each step with its on-chain signature."
+    },
+    {
+      "id": "d06-verifier",
+      "text": "Y esta es la clave de la privacidad. El PDF nunca sube a la blockchain, solo su hash. Con el documento original, el hash coincide. Si alguien altera un solo dólar, se detecta al instante.",
+      "en": "And this is the key to privacy. The PDF never goes on the blockchain, only its hash. With the original document, the hash matches. Change a single dollar, and it is detected instantly."
+    },
+    {
+      "id": "d07-repay",
+      "text": "Al vencimiento, la empresa repaga capital más rendimiento al escrow. El inversor retira sus fondos, la cuenta se cierra y el ciclo queda completo y auditado.",
+      "en": "At maturity, the company repays principal plus yield into the escrow. The investor withdraws the funds, the account closes, and the cycle is complete and audited."
+    },
+    {
+      "id": "d08-portfolio",
+      "text": "En el portfolio, el inversor ve su capital desplegado, el rendimiento realizado y sus próximos vencimientos, todo leído directo de la cadena.",
+      "en": "In the portfolio, the investor sees deployed capital, realized yield and upcoming maturities, all read straight from the chain."
+    },
+    {
+      "id": "d09-close",
+      "text": "Ocho instrucciones, diecinueve tests de seguridad, y una experiencia que cualquier pyme puede usar. Esto es Aura Fint.",
+      "en": "Eight instructions, 19 security tests, and an experience any SME can use. This is Aura Fint."
+    }
+  ]
+}
