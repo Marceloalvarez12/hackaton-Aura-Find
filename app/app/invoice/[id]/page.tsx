@@ -20,9 +20,7 @@ import { InvoiceCard, StatusStepper } from "@/components/InvoiceCard";
 import { DocumentVerifier } from "@/components/DocumentVerifier";
 import { RiskBadge } from "@/components/RiskBadge";
 import { Timeline } from "@/components/Timeline";
-
-const EXPLORER = (addr: string) =>
-  `https://explorer.solana.com/address/${addr}?cluster=custom&customUrl=http%3A%2F%2Flocalhost%3A8899`;
+import { explorerAddress as EXPLORER } from "@/lib/cluster";
 
 function Row({ label, value, mono = false, href }: { label: string; value: string; mono?: boolean; href?: string }) {
   const inner = (

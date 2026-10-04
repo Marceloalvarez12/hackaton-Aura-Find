@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { PublicKey } from "@solana/web3.js";
 import type { FactoringClient, TimelineEvent } from "@aura-fint/sdk";
+import { explorerTx } from "@/lib/cluster";
 
 const EVENT_META: Record<string, { label: string; color: string; describe: (d: any) => string }> = {
   InvoiceCreated: {
@@ -50,8 +51,7 @@ function short(v: unknown) {
   return `${s.slice(0, 4)}…${s.slice(-4)}`;
 }
 
-const TX_URL = (sig: string) =>
-  `https://explorer.solana.com/tx/${sig}?cluster=custom&customUrl=http%3A%2F%2Flocalhost%3A8899`;
+const TX_URL = explorerTx;
 
 export function Timeline({
   invoice,

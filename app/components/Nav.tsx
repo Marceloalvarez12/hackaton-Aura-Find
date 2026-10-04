@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "./Logo";
 import { WalletConnectButton } from "./WalletConnectButton";
+import { CLUSTER_LABEL } from "@/lib/cluster";
 
 const LINKS = [
   { href: "/marketplace", label: "Marketplace" },
@@ -47,7 +48,7 @@ export function Nav() {
         <div className="flex items-center gap-3">
           <span className="hidden items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-xs text-emerald-300 sm:flex">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-            Localnet
+            {CLUSTER_LABEL}
           </span>
           <WalletConnectButton />
         </div>

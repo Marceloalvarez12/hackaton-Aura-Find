@@ -14,6 +14,7 @@ import {
   GRACE_PERIOD_SECS,
 } from "@aura-fint/sdk";
 import { RiskBadge } from "./RiskBadge";
+import { explorerTx } from "@/lib/cluster";
 
 const STATUS_STYLE: Record<InvoiceStatus, string> = {
   [InvoiceStatus.Listed]: "bg-sky-500/15 text-sky-300 border-sky-500/30",
@@ -319,7 +320,7 @@ export function InvoiceCard({
 
         {sig && (
           <a
-            href={`https://explorer.solana.com/tx/${sig}?cluster=custom&customUrl=http%3A%2F%2Flocalhost%3A8899`}
+            href={explorerTx(sig)}
             target="_blank"
             rel="noreferrer"
             className="mt-3 block rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-center text-sm text-emerald-300 transition hover:bg-emerald-500/20"
