@@ -67,13 +67,13 @@ export function SeedPanel({
         <span className="rounded-md bg-violet-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-violet-300">
           Demo
         </span>
-        Herramientas de issuer — {DEMO_INVOICE.issuerName} → {DEMO_INVOICE.debtorName}
+        Issuer tools · {DEMO_INVOICE.issuerName} → {DEMO_INVOICE.debtorName}
       </summary>
       <div className="mt-4 flex flex-wrap gap-2">
         {[
-          ["1. Inicializar protocolo", initialize],
-          ["2. Emitir factura demo", createDemo],
-          ["3. Verificar (oráculo)", verifyDemo],
+          ["1. Initialize protocol", initialize],
+          ["2. Issue demo invoice", createDemo],
+          ["3. Verify (oracle)", verifyDemo],
         ].map(([label, fn]) => (
           <button
             key={label as string}

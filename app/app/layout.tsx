@@ -6,9 +6,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Aura Fint — Factoring Tokenizado B2B",
+  title: "Aura Fint · Tokenized B2B Invoice Factoring",
   description:
-    "Facturas por cobrar tokenizadas como RWA en Solana para PyMEs de LatAm",
+    "Receivables tokenized as real-world assets on Solana for Latin American SMEs",
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body className={`${inter.variable} font-sans min-h-screen antialiased`}>
         <Providers>{children}</Providers>
       </body>

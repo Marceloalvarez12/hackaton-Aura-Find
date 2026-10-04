@@ -17,7 +17,7 @@ type Listed = { publicKey: PublicKey; account: InvoiceAccount };
 type Filter = "all" | InvoiceStatus;
 
 const FILTERS: { key: Filter; label: string }[] = [
-  { key: "all", label: "Todas" },
+  { key: "all", label: "All" },
   { key: InvoiceStatus.Listed, label: "Listed" },
   { key: InvoiceStatus.Funded, label: "Funded" },
   { key: InvoiceStatus.Repaid, label: "Repaid" },
@@ -46,8 +46,8 @@ export default function Marketplace() {
   const [error, setError] = useState<string>();
   const [filter, setFilter] = useState<Filter>("all");
 
-  const refresh = useCallback(async () => {
-    setLoading(true);
+  const refresh = useCallback(async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
       setInvoices(await client.fetchAllInvoices());
       setError(undefined);
@@ -55,7 +55,7 @@ export default function Marketplace() {
       setError(
         e instanceof Error
           ? e.message.slice(0, 120)
-          : "No se pudieron cargar las facturas"
+          : "Couldn't load invoices"
       );
     } finally {
       setLoading(false);
@@ -99,19 +99,19 @@ export default function Marketplace() {
             Marketplace
           </p>
           <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Facturas listas para fondear
+            Invoices ready to fund
           </h1>
           <p className="mt-3 max-w-xl text-slate-400">
-            Cada factura fue verificada por el protocolo antes de listarse. Elegí
-            el yield, firmá, y recibí el RWA como garantía en la misma transacción.
+            Every invoice is verified by the protocol before it&apos;s listed. Pick the
+            yield, sign, and receive the RWA as collateral in the same transaction.
           </p>
         </section>
 
         <section className="relative mb-8 grid grid-cols-3 gap-4">
           {[
-            { k: stats.fundable, v: "fondeables", accent: true },
-            { k: `${stats.verified}/${invoices.length}`, v: "verificadas" },
-            { k: stats.total.toLocaleString("en-US"), v: "USDC listados" },
+            { k: stats.fundable, v: "fundable", accent: true },
+            { k: `${stats.verified}/${invoices.length}`, v: "verified" },
+            { k: stats.total.toLocaleString("en-US"), v: "USDC listed" },
           ].map((s) => (
             <div key={s.v} className="glass rounded-2xl p-5">
               <p
@@ -128,9 +128,9 @@ export default function Marketplace() {
           ))}
         </section>
 
-        {connected && (
+        {connected && process.env.NEXT_PUBLIC_DEMO_TOOLS !== "0" && (
           <div className="mb-8">
-            <SeedPanel client={client} onDone={refresh} />
+            <SeedPanel client={client} onDone={() => refresh(true)} />
           </div>
         )}
 
@@ -152,7 +152,7 @@ export default function Marketplace() {
               ))}
             </div>
             <button
-              onClick={refresh}
+              onClick={() => refresh()}
               disabled={loading}
               className="flex items-center gap-2 text-sm text-slate-400 transition hover:text-white disabled:opacity-50"
             >
@@ -169,13 +169,13 @@ export default function Marketplace() {
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                 />
               </svg>
-              Actualizar
+              Refresh
             </button>
           </div>
 
           {error && (
             <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-5 text-sm text-rose-300">
-              <p className="font-semibold">No se pudo conectar al programa</p>
+              <p className="font-semibold">Couldn&apos;t reach the program</p>
               <p className="mt-1 text-rose-300/70">{error}</p>
             </div>
           )}
@@ -206,13 +206,13 @@ export default function Marketplace() {
               </div>
               <p className="font-medium text-slate-300">
                 {filter === "all"
-                  ? "No hay facturas on-chain todavía"
-                  : `No hay facturas en estado ${filter}`}
+                  ? "No invoices on-chain yet"
+                  : `No ${filter} invoices`}
               </p>
               <p className="mt-1 text-sm text-slate-600">
                 {filter === "all"
-                  ? "Usá el panel de demo para emitir la primera."
-                  : "Probá con otro filtro."}
+                  ? "Use the demo panel to issue the first one."
+                  : "Try another filter."}
               </p>
             </div>
           )}
@@ -230,7 +230,7 @@ export default function Marketplace() {
                     invoice={account}
                     client={client}
                     connected={connected}
-                    onFunded={refresh}
+                    onFunded={() => refresh(true)}
                   />
                 </div>
               ))}

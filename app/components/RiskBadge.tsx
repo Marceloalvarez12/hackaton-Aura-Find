@@ -27,7 +27,7 @@ export function RiskBadge({ risk }: { risk: RiskAssessment }) {
       </span>
       {open && (
         <div className="glass absolute right-0 top-full z-10 mt-2 w-60 rounded-xl p-3 text-xs shadow-2xl">
-          <p className="mb-2 font-semibold text-slate-200">Evaluación de riesgo</p>
+          <p className="mb-2 font-semibold text-slate-200">Risk assessment</p>
           <ul className="space-y-1 text-slate-400">
             {risk.factors.map((f) => (
               <li key={f} className="flex gap-2">
@@ -37,7 +37,7 @@ export function RiskBadge({ risk }: { risk: RiskAssessment }) {
             ))}
           </ul>
           <p className="mt-2 border-t border-white/5 pt-2 text-[10px] text-slate-600">
-            Heurístico demo. En producción: buró + historial + validación fiscal.
+            Demo heuristic. In production: credit bureau + payment history + tax validation.
           </p>
         </div>
       )}

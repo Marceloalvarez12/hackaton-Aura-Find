@@ -70,17 +70,17 @@ export default function Portfolio() {
 
         <section className="relative pb-8 pt-12">
           <p className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-emerald-400">Portfolio</p>
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Mis posiciones</h1>
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">My positions</h1>
           <p className="mt-3 max-w-xl text-slate-400">
-            Cada RWA en tu wallet es un derecho de cobro verificado. Acá ves el capital
-            desplegado, el rendimiento esperado y los próximos vencimientos.
+            Every RWA in your wallet is a verified claim on a receivable. Track deployed
+            capital, expected yield and upcoming maturities.
           </p>
         </section>
 
         {!connected && (
           <div className="glass rounded-3xl p-16 text-center">
-            <p className="text-lg font-medium text-slate-300">Conectá tu wallet para ver tu portfolio</p>
-            <p className="mt-1 text-sm text-slate-500">Las posiciones se leen directo de la cadena.</p>
+            <p className="text-lg font-medium text-slate-300">Connect your wallet to see your portfolio</p>
+            <p className="mt-1 text-sm text-slate-500">Positions are read straight from the chain.</p>
           </div>
         )}
 
@@ -88,10 +88,10 @@ export default function Portfolio() {
           <>
             <section className="relative mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
               {[
-                { k: `${stats.deployed.toLocaleString("en-US")}`, v: "USDC desplegados", sub: `${stats.active} activas` },
-                { k: `+${stats.expected.toLocaleString("en-US", { maximumFractionDigits: 0 })}`, v: "USDC por cobrar", accent: true },
-                { k: `+${stats.realized.toLocaleString("en-US", { maximumFractionDigits: 0 })}`, v: "USDC realizados" },
-                { k: `${stats.avgApr.toFixed(1)}%`, v: "APR promedio" },
+                { k: `${stats.deployed.toLocaleString("en-US")}`, v: "USDC deployed", sub: `${stats.active} active` },
+                { k: `+${stats.expected.toLocaleString("en-US", { maximumFractionDigits: 0 })}`, v: "USDC expected", accent: true },
+                { k: `+${stats.realized.toLocaleString("en-US", { maximumFractionDigits: 0 })}`, v: "USDC realized" },
+                { k: `${stats.avgApr.toFixed(1)}%`, v: "Average APR" },
               ].map((s) => (
                 <div key={s.v} className="glass rounded-2xl p-5">
                   <p className={`text-3xl font-bold tracking-tight ${s.accent ? "text-emerald-300" : "text-white"}`}>
@@ -106,7 +106,7 @@ export default function Portfolio() {
             {upcoming.length > 0 && (
               <section className="glass relative mb-8 rounded-3xl p-6">
                 <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  Próximos vencimientos
+                  Upcoming maturities
                 </p>
                 <div className="space-y-2">
                   {upcoming.map(({ publicKey, account }) => {
@@ -142,10 +142,10 @@ export default function Portfolio() {
 
             {!loading && mine.length === 0 && (
               <div className="glass rounded-3xl p-16 text-center">
-                <p className="text-lg font-medium text-slate-300">Todavía no tenés posiciones</p>
-                <p className="mt-1 text-sm text-slate-500">Fondeá una factura en el marketplace para empezar.</p>
+                <p className="text-lg font-medium text-slate-300">No positions yet</p>
+                <p className="mt-1 text-sm text-slate-500">Fund an invoice in the marketplace to get started.</p>
                 <Link href="/marketplace" className="mt-5 inline-block rounded-xl bg-emerald-500 px-6 py-2.5 font-semibold text-slate-950 transition hover:bg-emerald-400">
-                  Ir al marketplace →
+                  Go to marketplace →
                 </Link>
               </div>
             )}
@@ -153,7 +153,7 @@ export default function Portfolio() {
             {mine.length > 0 && (
               <section className="relative">
                 <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  Mis RWAs ({mine.length})
+                  My RWAs ({mine.length})
                 </p>
                 <div className="grid gap-5 md:grid-cols-2">
                   {mine.map(({ publicKey, account }, i) => (

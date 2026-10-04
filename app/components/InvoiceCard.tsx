@@ -129,7 +129,7 @@ export function InvoiceCard({
       setSig(signature);
       onFunded?.(signature);
     } catch (e) {
-      setError(e instanceof Error ? e.message.slice(0, 140) : "Error en la tx");
+      setError(e instanceof Error ? e.message.slice(0, 140) : "Transaction failed");
     } finally {
       setPending(false);
     }
@@ -153,7 +153,7 @@ export function InvoiceCard({
           </div>
           <h3 className="mt-0.5 truncate text-lg font-semibold">{meta.issuerName}</h3>
           <p className="truncate text-sm text-slate-400">
-            Deudor: <span className="text-slate-200">{meta.debtorName}</span>
+            Debtor: <span className="text-slate-200">{meta.debtorName}</span>
           </p>
         </div>
         <div className="flex shrink-0 flex-col items-end gap-1.5">
@@ -166,21 +166,21 @@ export function InvoiceCard({
 
       <div className="mb-4 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/5 bg-white/5">
         <div className="bg-black/30 p-3">
-          <p className="text-[10px] uppercase tracking-wider text-slate-500">Monto</p>
+          <p className="text-[10px] uppercase tracking-wider text-slate-500">Amount</p>
           <p className="mt-0.5 bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-xl font-bold text-transparent">
             {amountUi.toLocaleString("en-US")}
           </p>
           <p className="text-[10px] text-slate-500">USDC</p>
         </div>
         <div className="bg-black/30 p-3">
-          <p className="text-[10px] uppercase tracking-wider text-slate-500">APR impl.</p>
+          <p className="text-[10px] uppercase tracking-wider text-slate-500">Implied APR</p>
           <p className="mt-0.5 text-xl font-bold text-white">{apr.toFixed(1)}%</p>
-          <p className="text-[10px] text-slate-500">{(yieldBps / 100).toFixed(2)}% / plazo</p>
+          <p className="text-[10px] text-slate-500">{(yieldBps / 100).toFixed(2)}% / term</p>
         </div>
         <div className="bg-black/30 p-3">
-          <p className="text-[10px] uppercase tracking-wider text-slate-500">Vence</p>
+          <p className="text-[10px] uppercase tracking-wider text-slate-500">Due in</p>
           <p className="mt-0.5 text-xl font-bold text-white">{daysLeft}d</p>
-          <p className="text-[10px] text-slate-500">{due.toLocaleDateString("es-AR")}</p>
+          <p className="text-[10px] text-slate-500">{due.toLocaleDateString("en-US")}</p>
         </div>
       </div>
 
@@ -190,14 +190,14 @@ export function InvoiceCard({
             <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Verificada por el oráculo
+            Verified by the oracle
           </span>
         ) : (
           <span className="inline-flex items-center gap-1 text-amber-300">
             <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Pendiente de verificación
+            Pending verification
           </span>
         )}
         <Link
@@ -225,7 +225,7 @@ export function InvoiceCard({
                 bps
               </label>
               <p className="text-slate-400">
-                Ganás{" "}
+                You earn{" "}
                 <span className="font-semibold text-emerald-300">
                   +{expectedReturn.toLocaleString("en-US", { maximumFractionDigits: 0 })} USDC
                 </span>
@@ -236,44 +236,44 @@ export function InvoiceCard({
               disabled={pending}
               className="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 px-4 py-3 font-semibold text-slate-950 transition hover:from-emerald-400 hover:to-emerald-300 disabled:opacity-50"
             >
-              {pending ? "Firmando…" : `Fondear ${amountUi.toLocaleString("en-US")} USDC`}
+              {pending ? "Signing…" : `Fund ${amountUi.toLocaleString("en-US")} USDC`}
             </button>
           </div>
         )}
 
         {fundable && !connected && (
           <p className="rounded-xl border border-dashed border-white/10 py-3 text-center text-sm text-slate-500">
-            Conectá tu wallet para fondear
+            Connect your wallet to fund
           </p>
         )}
 
         {awaitingVerification && (
           <p className="rounded-xl border border-dashed border-amber-500/20 bg-amber-500/5 py-3 text-center text-sm text-amber-300/80">
-            El protocolo bloquea el fondeo hasta la verificación
+            The protocol blocks funding until verification
           </p>
         )}
 
         {status === InvoiceStatus.Funded && !canRepay && !canDefault && (
           <p className="rounded-xl border border-violet-500/20 bg-violet-500/5 py-3 text-center text-sm text-violet-300/80">
-            Fondeada · esperando repago del emisor
+            Funded · awaiting issuer repayment
           </p>
         )}
 
         {status === InvoiceStatus.Repaid && !canWithdraw && (
           <p className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 py-3 text-center text-sm text-emerald-300/80">
-            Repagada · ciclo completado
+            Repaid · cycle complete
           </p>
         )}
 
         {status === InvoiceStatus.Cancelled && (
           <p className="rounded-xl border border-white/10 bg-white/[0.02] py-3 text-center text-sm text-slate-400">
-            Cancelada por el emisor antes del fondeo
+            Cancelled by the issuer before funding
           </p>
         )}
 
         {status === InvoiceStatus.Defaulted && !canRepay && (
           <p className="rounded-xl border border-rose-500/20 bg-rose-500/5 py-3 text-center text-sm text-rose-300/80">
-            En default · el RWA respalda el reclamo del inversor
+            In default · the RWA backs the investor&apos;s claim
           </p>
         )}
 
@@ -283,7 +283,7 @@ export function InvoiceCard({
             disabled={pending}
             className="w-full rounded-xl border border-rose-500/40 bg-rose-500/10 px-4 py-3 font-semibold text-rose-300 transition hover:bg-rose-500/20 disabled:opacity-50"
           >
-            {pending ? "Firmando…" : "Declarar default"}
+            {pending ? "Signing…" : "Declare default"}
           </button>
         )}
 
@@ -293,7 +293,7 @@ export function InvoiceCard({
             disabled={pending}
             className="w-full rounded-xl bg-violet-500 px-4 py-3 font-semibold text-slate-950 transition hover:bg-violet-400 disabled:opacity-50"
           >
-            {pending ? "Firmando…" : "Repagar (emisor)"}
+            {pending ? "Signing…" : "Repay (issuer)"}
           </button>
         )}
 
@@ -303,7 +303,7 @@ export function InvoiceCard({
             disabled={pending}
             className="w-full animate-pulse-ring rounded-xl bg-emerald-500 px-4 py-3 font-semibold text-slate-950 transition hover:bg-emerald-400 disabled:opacity-50"
           >
-            {pending ? "Firmando…" : "Retirar repago"}
+            {pending ? "Signing…" : "Withdraw repayment"}
           </button>
         )}
 
@@ -313,7 +313,7 @@ export function InvoiceCard({
             disabled={pending}
             className="mt-2 w-full rounded-xl px-4 py-2 text-sm text-slate-500 transition hover:bg-white/[0.03] hover:text-rose-300 disabled:opacity-50"
           >
-            Cancelar factura (emisor)
+            Cancel invoice (issuer)
           </button>
         )}
 
@@ -324,7 +324,7 @@ export function InvoiceCard({
             rel="noreferrer"
             className="mt-3 block rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-center text-sm text-emerald-300 transition hover:bg-emerald-500/20"
           >
-            ✓ Confirmada — ver en explorer
+            ✓ Confirmed · view on explorer
           </a>
         )}
         {error && (

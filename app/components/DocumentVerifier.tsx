@@ -34,12 +34,12 @@ export function DocumentVerifier({
     verify(new Uint8Array(await file.arrayBuffer()), file.name);
 
   const useCanonical = () =>
-    verify(canonicalDocument(getDemoMeta(invoiceId)), "documento-canonico.json");
+    verify(canonicalDocument(getDemoMeta(invoiceId)), "original-document.json");
 
   const useTampered = () => {
     const meta = getDemoMeta(invoiceId);
     const doc = canonicalDocument({ ...meta, amountUi: meta.amountUi + 1 });
-    verify(doc, "documento-alterado.json");
+    verify(doc, "tampered-document.json");
   };
 
   const downloadCanonical = () => {
@@ -57,12 +57,12 @@ export function DocumentVerifier({
       <div className="mb-5 flex items-start justify-between">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-violet-400">
-            Prueba de integridad
+            Integrity proof
           </p>
-          <h3 className="mt-1 text-xl font-semibold">Verificá el documento fiscal</h3>
+          <h3 className="mt-1 text-xl font-semibold">Verify the tax document</h3>
           <p className="mt-1 text-sm text-slate-400">
-            El PDF nunca toca la cadena. Solo su hash SHA-256. Cualquiera puede
-            comprobar que el documento no fue alterado — sin ver su contenido.
+            The PDF never touches the chain, only its SHA-256 hash. Anyone can check
+            that the document wasn&apos;t altered, without seeing its contents.
           </p>
         </div>
       </div>
@@ -91,20 +91,20 @@ export function DocumentVerifier({
           <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
         </svg>
         <p className="text-sm text-slate-300">
-          {busy ? "Calculando SHA-256…" : "Arrastrá el PDF / JSON de la factura, o hacé click"}
+          {busy ? "Computing SHA-256…" : "Drop the invoice PDF / JSON here, or click to browse"}
         </p>
-        <p className="mt-1 text-xs text-slate-600">Se procesa 100% en tu navegador</p>
+        <p className="mt-1 text-xs text-slate-600">Processed 100% in your browser</p>
       </label>
 
       <div className="mt-3 flex flex-wrap gap-2 text-xs">
         <button onClick={useCanonical} className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-slate-300 transition hover:border-emerald-500/40">
-          Probar con el documento original
+          Try the original document
         </button>
         <button onClick={useTampered} className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-slate-300 transition hover:border-rose-500/40">
-          Probar con uno alterado (+1 USDC)
+          Try a tampered one (+1 USDC)
         </button>
         <button onClick={downloadCanonical} className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-slate-300 transition hover:border-white/20">
-          ↓ Descargar documento
+          ↓ Download document
         </button>
       </div>
 
@@ -134,12 +134,12 @@ export function DocumentVerifier({
             </div>
             <div>
               <p className={`font-semibold ${result.match ? "text-emerald-300" : "text-rose-300"}`}>
-                {result.match ? "Documento íntegro" : "Documento alterado"}
+                {result.match ? "Document intact" : "Document tampered"}
               </p>
               <p className="text-xs text-slate-400">
                 {result.match
-                  ? "El hash coincide exactamente con el registrado on-chain"
-                  : "El hash NO coincide — el contenido difiere del original"}
+                  ? "The hash matches the on-chain record exactly"
+                  : "The hash does NOT match: the content differs from the original"}
               </p>
             </div>
           </div>
@@ -149,7 +149,7 @@ export function DocumentVerifier({
               <p className="break-all text-slate-300">{expected}</p>
             </div>
             <div>
-              <p className="text-slate-500">Calculado · {result.fileName}</p>
+              <p className="text-slate-500">Computed · {result.fileName}</p>
               <p className={`break-all ${result.match ? "text-emerald-300" : "text-rose-300"}`}>
                 {result.computed}
               </p>

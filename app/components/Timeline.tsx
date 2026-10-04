@@ -6,39 +6,39 @@ import type { FactoringClient, TimelineEvent } from "@aura-fint/sdk";
 
 const EVENT_META: Record<string, { label: string; color: string; describe: (d: any) => string }> = {
   InvoiceCreated: {
-    label: "Factura emitida",
+    label: "Invoice issued",
     color: "bg-sky-400",
-    describe: (d) => `RWA creado por ${usdc(d.amount)} USDC · hash del documento anclado`,
+    describe: (d) => `RWA created for ${usdc(d.amount)} USDC · document hash anchored`,
   },
   InvoiceVerified: {
-    label: "Verificada por el oráculo",
+    label: "Verified by the oracle",
     color: "bg-teal-400",
-    describe: (d) => `Atestación firmada por ${short(d.verifier)}`,
+    describe: (d) => `Attestation signed by ${short(d.verifier)}`,
   },
   InvoiceFunded: {
-    label: "Fondeada",
+    label: "Funded",
     color: "bg-violet-400",
-    describe: (d) => `${usdc(d.fundedAmount)} USDC al emisor · 1 RWA a ${short(d.investor)}`,
+    describe: (d) => `${usdc(d.fundedAmount)} USDC to the issuer · 1 RWA to ${short(d.investor)}`,
   },
   InvoiceRepaid: {
-    label: "Repagada",
+    label: "Repaid",
     color: "bg-emerald-400",
-    describe: (d) => `${usdc(d.repaidAmount)} USDC depositados en el vault del escrow`,
+    describe: (d) => `${usdc(d.repaidAmount)} USDC deposited into the escrow vault`,
   },
   RepaymentWithdrawn: {
-    label: "Repago retirado",
+    label: "Repayment withdrawn",
     color: "bg-emerald-300",
-    describe: (d) => `${usdc(d.amount)} USDC al inversor · vault cerrado, rent recuperado`,
+    describe: (d) => `${usdc(d.amount)} USDC to the investor · vault closed, rent reclaimed`,
   },
   InvoiceCancelled: {
-    label: "Cancelada",
+    label: "Cancelled",
     color: "bg-slate-400",
-    describe: () => "El emisor retiró la factura antes del fondeo",
+    describe: () => "The issuer withdrew the invoice before funding",
   },
   InvoiceDefaulted: {
-    label: "Default declarado",
+    label: "Default declared",
     color: "bg-rose-400",
-    describe: (d) => `Principal en riesgo: ${usdc(d.principal)} USDC · el RWA respalda el reclamo`,
+    describe: (d) => `Principal at risk: ${usdc(d.principal)} USDC · the RWA backs the claim`,
   },
 };
 
@@ -80,16 +80,16 @@ export function Timeline({
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400">
-            Auditoría on-chain
+            On-chain audit
           </p>
-          <h3 className="mt-1 text-xl font-semibold">Historia de la factura</h3>
+          <h3 className="mt-1 text-xl font-semibold">Invoice history</h3>
           <p className="mt-1 text-sm text-slate-400">
-            Reconstruida leyendo los eventos del programa directo de la cadena. Sin base de datos.
+            Rebuilt from the program&apos;s events, read straight from the chain. No database.
           </p>
         </div>
         {events && (
           <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-xs text-slate-400">
-            {events.length} eventos
+            {events.length} events
           </span>
         )}
       </div>
@@ -109,7 +109,7 @@ export function Timeline({
       )}
 
       {events && events.length === 0 && (
-        <p className="text-sm text-slate-500">No se encontraron eventos para esta cuenta.</p>
+        <p className="text-sm text-slate-500">No events found for this account.</p>
       )}
 
       {events && events.length > 0 && (
@@ -136,7 +136,7 @@ export function Timeline({
                   <p className="font-semibold">{meta.label}</p>
                   <p className="text-xs text-slate-500">
                     {ev.blockTime
-                      ? new Date(ev.blockTime * 1000).toLocaleString("es-AR")
+                      ? new Date(ev.blockTime * 1000).toLocaleString("en-US")
                       : `slot ${ev.slot}`}
                   </p>
                 </div>

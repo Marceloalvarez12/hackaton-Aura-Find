@@ -63,7 +63,7 @@ export default function InvoiceDetail({ params }: { params: Promise<{ id: string
       }
       setRefreshKey((k) => k + 1);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "No se encontró la factura");
+      setError(e instanceof Error ? e.message : "Invoice not found");
     }
   }, [client, pubkey]);
 
@@ -73,7 +73,7 @@ export default function InvoiceDetail({ params }: { params: Promise<{ id: string
     return (
       <>
         <Nav />
-        <main className="mx-auto max-w-3xl px-6 py-20 text-center text-slate-400">Dirección inválida.</main>
+        <main className="mx-auto max-w-3xl px-6 py-20 text-center text-slate-400">Invalid address.</main>
       </>
     );
   }
@@ -104,11 +104,11 @@ export default function InvoiceDetail({ params }: { params: Promise<{ id: string
             <section className="relative mt-6 flex flex-wrap items-end justify-between gap-6 pb-8">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-400">
-                  Factura #{meta.invoiceId} · {meta.sector} · {meta.country}
+                  Invoice #{meta.invoiceId} · {meta.sector} · {meta.country}
                 </p>
                 <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">{meta.issuerName}</h1>
                 <p className="mt-2 text-lg text-slate-400">
-                  Deudor: <span className="text-white">{meta.debtorName}</span>
+                  Debtor: <span className="text-white">{meta.debtorName}</span>
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -120,7 +120,7 @@ export default function InvoiceDetail({ params }: { params: Promise<{ id: string
             </section>
 
             <div className="relative grid gap-6 lg:grid-cols-[1fr_1.3fr]">
-              <div className="space-y-6">
+              <div className="space-y-6 self-start lg:sticky lg:top-24">
                 <InvoiceCard
                   invoicePubkey={pubkey}
                   invoice={invoice}
@@ -131,12 +131,12 @@ export default function InvoiceDetail({ params }: { params: Promise<{ id: string
 
                 <div className="glass rounded-3xl p-6">
                   <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                    Términos
+                    Terms
                   </p>
-                  <Row label="Emisión" value={meta.issueDate} />
-                  <Row label="Plazo" value={`${meta.termDays} días`} />
+                  <Row label="Issued" value={meta.issueDate} />
+                  <Row label="Term" value={`${meta.termDays} days`} />
                   <Row label="Yield" value={`${(meta.yieldBps / 100).toFixed(2)}% · APR ${impliedApr(meta.yieldBps, meta.termDays).toFixed(1)}%`} />
-                  <Row label="Jurisdicción" value={meta.country} />
+                  <Row label="Jurisdiction" value={meta.country} />
                   <Row label="Metadata" value={invoice.metadataUri} mono />
                 </div>
               </div>
@@ -160,14 +160,14 @@ export default function InvoiceDetail({ params }: { params: Promise<{ id: string
                   {escrow && (
                     <>
                       <Row label="Principal" value={`${(Number(escrow.principal.toString()) / 1e6).toLocaleString("en-US")} USDC`} />
-                      <Row label="Fondeada" value={new Date(Number(escrow.fundedAt.toString()) * 1000).toLocaleString("es-AR")} />
+                      <Row label="Funded at" value={new Date(Number(escrow.fundedAt.toString()) * 1000).toLocaleString("en-US")} />
                     </>
                   )}
                   {vault !== null && (
                     <Row label="Vault USDC" value={`${(vault / 1e6).toLocaleString("en-US")} USDC`} />
                   )}
                   {status === InvoiceStatus.Repaid && vault === null && (
-                    <Row label="Vault" value="Cerrado · rent recuperado" />
+                    <Row label="Vault" value="Closed · rent reclaimed" />
                   )}
                 </div>
               </div>
@@ -178,7 +178,7 @@ export default function InvoiceDetail({ params }: { params: Promise<{ id: string
         {!invoice && !error && (
           <div className="mt-20 flex items-center justify-center gap-3 text-slate-500">
             <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-600 border-t-emerald-400" />
-            Cargando factura…
+            Loading invoice…
           </div>
         )}
       </main>
