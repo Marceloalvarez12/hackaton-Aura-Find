@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #070b14;
+  --color-surface-2: #0d1526;
+  --color-edge: #1e2b4a;
+  --color-brand: #34d399;
+  --color-brand-dim: #10b981;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-surface);
+  color: #e7ecf3;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(52, 211, 153, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2b4a;
+  border-radius: 4px;
+}
+
+/* Grid pattern de fondo para el hero */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 70%);
+}
+
+/* Glass card */
+.glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.glass-hover {
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.glass-hover:hover {
+  border-color: rgba(52, 211, 153, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(52, 211, 153, 0.1),
+    0 20px 50px -20px rgba(52, 211, 153, 0.25);
+  transform: translateY(-2px);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(52, 211, 153, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+  }
+}
+.animate-pulse-ring {
+  animation: pulse-ring 2.2s infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(-1deg);
+  }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes orb {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+}
+.animate-orb {
+  animation: orb 18s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+}
