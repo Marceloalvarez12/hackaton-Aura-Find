@@ -14,7 +14,8 @@ import { USDC_DECIMALS } from "./constants";
  */
 export async function createMockUsdc(
   connection: Connection,
-  payer: Signer
+  payer: Signer,
+  mintKeypair: Keypair = Keypair.generate()
 ): Promise<PublicKey> {
   return createMint(
     connection,
@@ -22,7 +23,7 @@ export async function createMockUsdc(
     payer.publicKey,
     null,
     USDC_DECIMALS,
-    Keypair.generate(),
+    mintKeypair,
     undefined,
     TOKEN_PROGRAM_ID
   );

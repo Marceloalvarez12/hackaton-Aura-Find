@@ -55,7 +55,12 @@ const clientFor = (kp: Keypair, usdcMint: PublicKey) =>
 
 async function main() {
   console.log("== 1. Mock USDC");
-  const usdcMint = await createMockUsdc(connection, issuer);
+  // Mint con keypair fija: la dirección de USDC no cambia entre reseteos (no hay que rebuildear la app).
+  const usdcMint = await createMockUsdc(
+    connection,
+    issuer,
+    loadOrCreate(join(ROOT, "deploy-keys/usdc-mint.json"))
+  );
   console.log("   USDC_MINT:", usdcMint.toBase58());
 
   const issuerClient = clientFor(issuer, usdcMint);

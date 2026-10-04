@@ -33,7 +33,7 @@ export const DEMO_INVOICES: DemoInvoiceMeta[] = [
     termDays: 45,
     issueDate: "2026-09-15",
     country: "AR",
-    sector: "Logística",
+    sector: "Logistics",
   },
   {
     invoiceId: 2,
@@ -45,7 +45,7 @@ export const DEMO_INVOICES: DemoInvoiceMeta[] = [
     termDays: 60,
     issueDate: "2026-09-20",
     country: "CL",
-    sector: "Textil",
+    sector: "Textiles",
   },
   {
     invoiceId: 3,
@@ -57,7 +57,7 @@ export const DEMO_INVOICES: DemoInvoiceMeta[] = [
     termDays: 30,
     issueDate: "2026-09-25",
     country: "AR",
-    sector: "Agro",
+    sector: "Agribusiness",
   },
   {
     invoiceId: 4,
@@ -69,7 +69,7 @@ export const DEMO_INVOICES: DemoInvoiceMeta[] = [
     termDays: 60,
     issueDate: "2026-09-10",
     country: "AR",
-    sector: "Industria",
+    sector: "Manufacturing",
   },
   {
     invoiceId: 5,
@@ -81,7 +81,7 @@ export const DEMO_INVOICES: DemoInvoiceMeta[] = [
     termDays: 90,
     issueDate: "2026-08-30",
     country: "CO",
-    sector: "Alimentos",
+    sector: "Food & Beverage",
   },
   {
     invoiceId: 6,
@@ -106,8 +106,8 @@ export function getDemoMeta(
   return (
     DEMO_INVOICES.find((m) => m.invoiceId === id) ?? {
       invoiceId: id,
-      issuerName: `Emisor #${id}`,
-      debtorName: "Deudor no registrado",
+      issuerName: `Issuer #${id}`,
+      debtorName: "Unregistered debtor",
       debtorTier: 3,
       amountUi: 0,
       yieldBps: 0,

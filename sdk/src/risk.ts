@@ -22,25 +22,25 @@ export function assessRisk(meta: DemoInvoiceMeta): RiskAssessment {
   score -= tierPenalty;
   factors.push(
     meta.debtorTier === 1
-      ? "Deudor corporativo grado inversión"
+      ? "Investment-grade corporate debtor"
       : meta.debtorTier === 2
-        ? "Deudor gran empresa regional"
-        : "Deudor PyME"
+        ? "Large regional company debtor"
+        : "SME debtor"
   );
 
   if (meta.termDays > 75) {
     score -= 12;
-    factors.push(`Plazo largo (${meta.termDays}d)`);
+    factors.push(`Long term (${meta.termDays}d)`);
   } else if (meta.termDays > 45) {
     score -= 5;
-    factors.push(`Plazo medio (${meta.termDays}d)`);
+    factors.push(`Medium term (${meta.termDays}d)`);
   } else {
-    factors.push(`Plazo corto (${meta.termDays}d)`);
+    factors.push(`Short term (${meta.termDays}d)`);
   }
 
   if (meta.amountUi > 50_000) {
     score -= 4;
-    factors.push("Ticket alto");
+    factors.push("Large ticket");
   }
 
   const grade: RiskGrade =

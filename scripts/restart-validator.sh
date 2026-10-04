@@ -6,7 +6,8 @@ ROOT="/mnt/d/MARCELO ALVAREZ/Downloads/Hackaton-Colosseum/factoring-latam"
 pkill -f "solana-test-validator" 2>/dev/null
 sleep 2
 cd /root
-setsid "$SOL/solana-test-validator" --reset --quiet > /tmp/validator.log 2>&1 < /dev/null &
+# --limit-ledger-size alto: conserva el historial de transacciones (el timeline lo necesita)
+setsid "$SOL/solana-test-validator" --reset --quiet --limit-ledger-size 500000000 > /tmp/validator.log 2>&1 < /dev/null &
 
 for i in $(seq 1 30); do
   "$SOL/solana" cluster-version --url http://localhost:8899 >/dev/null 2>&1 && break
