@@ -1,0 +1,15 @@
+.anchor/
+.DS_Store
+target/
+**/*.rs.bk
+node_modules/
+.next/
+next-env.d.ts
+test-ledger/
+.yarn/
+pnpm-debug.log*
+.env
+.env.local
+deploy-keys/
+tests/dist/
+sdk/dist/
